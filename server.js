@@ -11,9 +11,9 @@ connectDB();
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-// Enable CORS
+// Enable CORS for all origins (adjust as needed)
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow requests from the frontend
+  origin: '*',
   methods: 'GET,POST,PUT,DELETE',
   credentials: true
 }));

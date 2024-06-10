@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const AddExpense = () => {
+const AddExpense = ({ refreshExpenses }) => {
   const [name, setName] = useState('');
   const [amount, setAmount] = useState('');
 
@@ -13,10 +13,16 @@ const AddExpense = () => {
       amount
     };
 
-    await axios.post('/api/expenses', newExpense);
-
-    setName('');
-    setAmount('');
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      await axios.post(`${apiUrl}/api/expenses`, newExpense);
+      console.log(apiUrl);
+      refreshExpenses(); // Refresh the expenses list after successful post
+      setName('');
+      setAmount('');
+    } catch (err) {
+      console.error(err.message);
+    }
   };
 
   return (
